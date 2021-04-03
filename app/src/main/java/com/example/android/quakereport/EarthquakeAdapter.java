@@ -8,9 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+
+    // global variables
+    private static final String LOCATION_SEPARATOR = " of ";
+    String primaryLocation;
+    String locationOffset;
 
 
     /**
@@ -52,25 +60,71 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Find the TextView in the list_item.xml layout with the ID version_name
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        magnitudeView.setText(currentEarthquake.getMagnitude());
 
-        // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView locationView = (TextView) listItemView.findViewById(R.id.location);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        locationView.setText(currentEarthquake.getLocation());
+        String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
+        // Display the magnitude of the current earthquake in that TextView
+        magnitudeView.setText(formattedMagnitude);
+
+        String originalLocation = currentEarthquake.getLocation();
+
+        if (originalLocation.contains(LOCATION_SEPARATOR)) {
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            locationOffset = parts[0] + LOCATION_SEPARATOR;
+            primaryLocation = parts[1];
+        } else {
+            locationOffset = getContext().getString(R.string.near_the);
+            primaryLocation = originalLocation;
+        }
+
+        TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
+        primaryLocationView.setText(primaryLocation);
+
+        TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
+        locationOffsetView.setText(locationOffset);
+
+        // Create a new Date object from the time in milliseconds of the earthquake
+        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
+
+        String formattedDate = formatDate(dateObject);
+
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        dateView.setText(currentEarthquake.getDate());
+        dateView.setText(formattedDate);
+
+        // Find the TextView with view ID time
+        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
+        // Format the time string (i.e. "4:30PM")
+        String formattedTime = formatTime(dateObject);
+        // Display the time of the current earthquake in that TextView
+        timeView.setText(formattedTime);
 
         // Return the whole list item layout
         // so that it can be shown in the ListView
         return listItemView;
+    }
+
+    /**
+     * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
+     */
+    private String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        return dateFormat.format(dateObject);
+    }
+
+    /**
+     * Return the formatted date string (i.e. "4:30 PM") from a Date object.
+     */
+    private String formatTime(Date dateObject) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("k:mm");
+        return timeFormat.format(dateObject);
+    }
+
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(magnitude);
     }
 
 }
