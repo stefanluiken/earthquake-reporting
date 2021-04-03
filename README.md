@@ -1,8 +1,8 @@
-Earthquake reporting app
+Earthquake Reporter app
 ===================================
 
-This app displays a list of recent earthquakes in the world
-from the U.S. Geological Survey (USGS) organization.
+This is an Earthquake reporting app, which uses JSON APIs to fetch data on recent earthquakes in the world.
+This app has been built with Java.
 
 More info on the USGS Earthquake API available at:
 https://earthquake.usgs.gov/fdsnws/event/1/
