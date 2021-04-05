@@ -19,5 +19,5 @@ Getting Started
 This sample uses the Gradle build system. To build this project, use the
 "gradlew build" command or use "Import Project" in Android Studio.
 
-<a href="https://github.com/stefanluiken/earthquake-reporting"><img src="https://github.com/stefanluiken/earthquake-reporting/blob/master/earthquake_reporting.png" title="earthquake-reporting" alt="earthquake-reporting"></a>
+<a href="https://github.com/stefanluiken/earthquake-reporting"><img src="https://github.com/stefanluiken/earthquake-reporting/blob/main/earthquake_reporting.png" title="earthquake-reporting" alt="earthquake-reporting"></a>
 
