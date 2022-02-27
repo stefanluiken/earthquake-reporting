@@ -1,4 +1,4 @@
-Earthquake Reporter app
+Earthquake Reporter
 ===================================
 
 This is an Earthquake reporting app, which uses JSON APIs to fetch data on recent earthquakes in the world.
